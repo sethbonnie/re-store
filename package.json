@@ -1,0 +1,24 @@
+{
+  "name": "re-store",
+  "version": "0.0.0",
+  "description": "A data store built around immutable data structures.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sethbonnie/re-store.git"
+  },
+  "keywords": [
+    "store",
+    "immutable",
+    "data"
+  ],
+  "author": "Seth Bonnie <sethkbonnie@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sethbonnie/re-store/issues"
+  },
+  "homepage": "https://github.com/sethbonnie/re-store"
+}
