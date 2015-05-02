@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/sethbonnie/re-store/issues"
   },
-  "homepage": "https://github.com/sethbonnie/re-store"
+  "homepage": "https://github.com/sethbonnie/re-store",
+  "devDependencies": {
+    "immutable": "^3.7.2"
+  }
 }
