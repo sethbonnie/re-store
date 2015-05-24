@@ -26,5 +26,8 @@
     "gulp-jshint": "^1.10.0",
     "immutable": "^3.7.2",
     "mocha": "^2.2.4"
+  },
+  "dependencies": {
+    "object-assign": "^2.0.0"
   }
 }
