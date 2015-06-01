@@ -23,13 +23,18 @@ var ListStore = module.exports = function( iterable ) {
 
   var MutablePersistentMethods = {
     setP: function (index, value) {
-      var temp = this.set(index, value);
-      this.__eventEmitter.emit( this.CHANGED );
-      // add temp to history
+      var newState = this.set(index, value);
 
-      // create new current state
-      this.__state = temp;
+      replaceState( this, newState );
       
+      return this;
+    },
+
+    deleteP: function( index ) {
+      var newState = this.delete( index );
+
+      replaceState( this, newState );
+
       return this;
     }
   };
@@ -40,4 +45,9 @@ var ListStore = module.exports = function( iterable ) {
   forward( store, ['on'], '__eventEmitter' );
 
   return store;
+};
+
+function replaceState( store, newState ) {
+  store.__state = newState;
+  store.__eventEmitter.emit( store.CHANGED );
 };

@@ -45,7 +45,6 @@ var mutablePersistentListMethods = module.exports = function() {
 
     it(  'emits a store.CHANGED event', function( done ) {
       var store = ListStore();
-
       store.on( store.CHANGED, function() {
         done();
       });
@@ -56,11 +55,35 @@ var mutablePersistentListMethods = module.exports = function() {
   });
 
   describe( '#deleteP( index )', function() {
-    it( 'mutates into a new List with index removed' );
+    it( 'mutates into a new List with index removed', function() {
+      var store = ListStore([1,2,3,4]);
+      store.deleteP(2);
+      assert.deepEqual( store.toArray(), [1,2,4] );
+    });
 
-    it( 'has a size 1 less than the previous state' );
+    it( 'shifts higher indices down', function() {
+      var store = ListStore([1,2,3,4]);
+      store.deleteP(2);
+      assert.equal( store.get(2), 4 );
+    });
 
-    it( 'emits a store.CHANGED event' );
+    it( 'has a size 1 less than the previous state', function() {
+      var store = ListStore([1,2,3,4]);
+      var originalSize = store.size();
+      store.deleteP(2);
+
+      assert.equal( store.size(), originalSize - 1);
+    });
+
+    it( 'emits a store.CHANGED event', function( done ) {
+      var store = ListStore();
+      store.on( store.CHANGED, function() {
+        done();
+      });
+
+      // This call should trigger it
+      store.deleteP( 1, 2 );
+    });
   });
 
   describe( '#clearP()', function() {
