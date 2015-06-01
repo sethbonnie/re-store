@@ -6,16 +6,18 @@ var likeImmutablelist = module.exports = function() {
     var arr = [1,2,3];
     var listStore = ListStore(arr);
 
+    console.log( listStore );
+
     assert.deepEqual( listStore.toArray(), arr );
   });
 
-  describe( '#size', function() {
+  describe( '#size()', function() {
     it( 'returns correct size', function() {
       var l1 = ListStore([1,2,3]);
       var l2 = ListStore();
 
-      assert.equal( l1.size, 3 );
-      assert.equal( l2.size, 0 );
+      assert.equal( l1.size(), 3 );
+      assert.equal( l2.size(), 0 );
     });
   });
 
@@ -60,7 +62,7 @@ var likeImmutablelist = module.exports = function() {
     });
 
     it( 'returns a new List with 0 size', function() {
-      assert( listStore.size > 0 );
+      assert( listStore.size() > 0 );
       assert.equal( listStore.clear().size, 0 );
     });
 
@@ -93,7 +95,7 @@ var likeImmutablelist = module.exports = function() {
     });
 
     it( 'returns a new List with a size one less than this List', function() {
-      assert.equal( listStore.pop().size, listStore.size - 1);
+      assert.equal( listStore.pop().size, listStore.size() - 1);
     });
   });
 

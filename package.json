@@ -28,6 +28,8 @@
     "mocha": "^2.2.4"
   },
   "dependencies": {
+    "forward-props": "^0.3.0",
+    "list-all-props": "0.0.1",
     "object-assign": "^2.0.0"
   }
 }
