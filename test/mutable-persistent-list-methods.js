@@ -43,7 +43,16 @@ var mutablePersistentListMethods = module.exports = function() {
       });
     });
 
-    it(  'emits a store.CHANGED event' );
+    it(  'emits a store.CHANGED event', function( done ) {
+      var store = ListStore();
+
+      store.on( store.CHANGED, function() {
+        done();
+      });
+
+      // This call should trigger it
+      store.setP( 1, 2 );
+    });
   });
 
   describe( '#deleteP( index )', function() {

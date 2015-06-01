@@ -1,5 +1,6 @@
 'use strict';
 
+var EventEmitter = require( 'events' ).EventEmitter;
 var Immutable = require( 'immutable' );
 var objectAssign = require( 'object-assign' );
 var forward = require( 'forward-props' );
@@ -8,8 +9,9 @@ var listAllProps = require( 'list-all-props' );
 var ListStore = module.exports = function( iterable ) {
   var store = {
     __state: Immutable.List(iterable),
-    __subscribers: Immutable.Map(),
-    __history: Immutable.List()
+    __eventEmitter: new EventEmitter(),
+    __history: Immutable.List(),
+    CHANGED: '__CHANGED__'
   };
 
   var immutableListProperties = listAllProps( store.__state ).filter(
@@ -22,6 +24,7 @@ var ListStore = module.exports = function( iterable ) {
   var MutablePersistentMethods = {
     setP: function (index, value) {
       var temp = this.set(index, value);
+      this.__eventEmitter.emit( this.CHANGED );
       // add temp to history
 
       // create new current state
@@ -34,6 +37,7 @@ var ListStore = module.exports = function( iterable ) {
 
   objectAssign( store, MutablePersistentMethods );
   forward( store, immutableListProperties, '__state' );
+  forward( store, ['on'], '__eventEmitter' );
 
   return store;
 };
