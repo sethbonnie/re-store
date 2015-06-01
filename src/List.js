@@ -54,6 +54,14 @@ var ListStore = module.exports = function( iterable ) {
       replaceState( this, newState );
 
       return this;
+    },
+
+    popP: function() {
+      var newState = this.pop();
+
+      replaceState( this, newState );
+
+      return this;
     }
   };
 

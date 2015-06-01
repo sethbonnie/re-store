@@ -148,11 +148,30 @@ var mutablePersistentListMethods = module.exports = function() {
 
   describe( '#popP()', function() {
     it( 'mutates into a new List excluding the last index in the' +
-      ' previous state' );
+      ' previous state', function() {
+      var store = ListStore([1,2,3,4]);
+      store.popP()
+      assert.deepEqual( store.toArray(), [1,2,3] ); 
+    });
 
-    it( 'has a size 1 less than the previous state' );
+    it( 'has a size 1 less than the previous state', function() {
+      var store = ListStore([1,2,3,4]);
+      var originalSize = store.size();
+      store.popP();
+      assert.equal( store.size(), originalSize - 1 );
+    });
 
-    it( 'emits a store.CHANGED event' );
+    it( 'emits a store.CHANGED event', function( done ) {
+      var store = ListStore([1,2,3,4]);
+      store.on( store.CHANGED, function() {
+        done();
+      });
+
+      // This call should trigger it
+      store.popP();
+    });
+
+    it( 'does not emit a store.CHANGED event when store is empty' );
   });
 
   describe( 'unshiftP( ...values )', function() {
