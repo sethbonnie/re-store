@@ -82,16 +82,35 @@ var mutablePersistentListMethods = module.exports = function() {
       });
 
       // This call should trigger it
-      store.deleteP( 1, 2 );
+      store.deleteP(2);
     });
   });
 
   describe( '#clearP()', function() {
-    it( 'mutates into a new List with 0 size' );
+    it( 'mutates into a new List with 0 size', function() {
+      var store = ListStore([1,2,3,4]);
 
-    it( 'removes all elements form the List' );
+      assert( store.size() > 0 );
+      store.clearP();
+      assert.equal( store.size() , 0 );
+    });
 
-    it( 'emits a store.CHANGED event' );
+    it( 'removes all elements from the List', function() {
+      var store = ListStore([1,2,3,4]);
+      assert( store.get(0) );
+      store.clearP();
+      assert( !store.get(0) );
+    });
+
+    it( 'emits a store.CHANGED event', function( done ) {
+      var store = ListStore();
+      store.on( store.CHANGED, function() {
+        done();
+      });
+
+      // This call should trigger it
+      store.clearP();
+    });
   });
 
   describe( '#pushP( ...values )', function() {

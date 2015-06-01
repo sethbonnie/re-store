@@ -24,7 +24,7 @@ var ListStore = module.exports = function( iterable ) {
   var MutablePersistentMethods = {
     setP: function (index, value) {
       var newState = this.set(index, value);
-
+      
       replaceState( this, newState );
       
       return this;
@@ -32,6 +32,14 @@ var ListStore = module.exports = function( iterable ) {
 
     deleteP: function( index ) {
       var newState = this.delete( index );
+
+      replaceState( this, newState );
+
+      return this;
+    },
+
+    clearP: function() {
+      var newState = this.clear();
 
       replaceState( this, newState );
 
