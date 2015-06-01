@@ -114,13 +114,36 @@ var mutablePersistentListMethods = module.exports = function() {
   });
 
   describe( '#pushP( ...values )', function() {
-    it( 'mutates into a new List with the provided values appended' );
+    it( 'mutates into a new List with the provided values appended', function() {
+      var store = ListStore();
+      store.pushP(1,2,3,4);
+      assert.deepEqual( store.toArray(), [1,2,3,4] );
+    });
 
-    it( 'appends the new values starting at the List\'s size' );
+    it( 'appends the new values starting at the List\'s size', function() {
+      var store = ListStore([1,2,3,4]);
+      store.pushP(5,6,7);
+      assert.deepEqual( store.toArray(), [1,2,3,4,5,6,7] );
+    });
 
-    it( 'has a size equal to previous state + size of added values' );
+    it( 'has a size equal to previous state + size of added values', function() {
+      var store = ListStore();
+      var originalSize = store.size();
+      store.pushP(1,2,3,4);
+      assert.equal( store.size(), originalSize + 4 );
+    });
 
-    it( 'emits a store.CHANGED event' );
+    it( 'emits a store.CHANGED event', function( done ) {
+      var store = ListStore();
+      store.on( store.CHANGED, function() {
+        done();
+      });
+
+      // This call should trigger it
+      store.pushP();
+    });
+
+    it( 'does not emit a store.CHANGED event if called with no args' );
   });
 
   describe( '#popP()', function() {
