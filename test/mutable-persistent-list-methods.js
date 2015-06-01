@@ -176,13 +176,34 @@ var mutablePersistentListMethods = module.exports = function() {
 
   describe( 'unshiftP( ...values )', function() {
 
-    it( 'mutates into a new List with provided values prepended' );
+    it( 'mutates into a new List with provided values prepended', function() {
+      var store = ListStore([5,6]);
+      store.unshiftP(1,2,3,4);
+      assert.deepEqual( store.toArray(), [1,2,3,4,5,6] );
+    });
 
-    it( 'shifts other values to higher indices' );
+    it( 'shifts other values to higher indices', function() {
+      var store = ListStore([1,2,3]);
+      store.unshiftP(-1, 0);
+      assert.equal( store.get(4), 3 );
+    });
 
-    it( 'has a size equal to previous state + size of added values' );
+    it( 'has a size equal to previous state + size of added values', function() {
+      var store = ListStore([1,2]);
+      var originalSize = store.size();
+      store.unshiftP(3,4);
+      console.log( store.get(0) );
+      assert.equal( store.size(), originalSize + 2 );
+    });
 
-    it( 'emits a store.CHANGED event' );
+    it( 'emits a store.CHANGED event', function( done ) {
+      var store = ListStore([1,2]);
+      store.on( store.CHANGED, function() {
+        done();
+      });
+
+      store.unshiftP([3,4]);
+    });
   });
 
   describe( 'shiftP()', function() {

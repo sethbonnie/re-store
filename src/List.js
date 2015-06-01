@@ -49,8 +49,6 @@ var ListStore = module.exports = function( iterable ) {
     pushP: function( _values ) {
       var newState = this.push.apply( this.__state, arguments );
 
-      console.log( newState );
-
       replaceState( this, newState );
 
       return this;
@@ -61,6 +59,12 @@ var ListStore = module.exports = function( iterable ) {
 
       replaceState( this, newState );
 
+      return this;
+    },
+
+    unshiftP: function() {
+      var newState = this.unshift.apply( this.__state, arguments );
+      replaceState( this, newState );
       return this;
     }
   };
