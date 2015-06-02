@@ -8,7 +8,7 @@ var likeImmutablelist = module.exports = function() {
 
     console.log( listStore );
 
-    assert.deepEqual( listStore.toArray(), arr );
+    assert.deepEqual( listStore.toJS(), arr );
   });
 
   describe( '#size()', function() {
@@ -26,8 +26,8 @@ var likeImmutablelist = module.exports = function() {
       var arr = [1,2,3];
       var listStore = ListStore(arr);
 
-      assert.deepEqual( listStore.set(0, 4).toArray(), [4,2,3]);
-      assert.deepEqual( listStore.toArray(), arr );
+      assert.deepEqual( listStore.set(0, 4).toJS(), [4,2,3]);
+      assert.deepEqual( listStore.toJS(), arr );
     });
   });
 
@@ -41,7 +41,7 @@ var likeImmutablelist = module.exports = function() {
     });
 
     it( 'Returns a new List which excludes this `index`', function() {
-      assert.deepEqual( listStore.delete(2).toArray(), [1,2,4]);
+      assert.deepEqual( listStore.delete(2).toJS(), [1,2,4]);
     });
 
     it( 'returns a new List with a size 1 less than this List', function() {
@@ -50,7 +50,7 @@ var likeImmutablelist = module.exports = function() {
 
     it( 'leaves the store\'s list untouched', function() {
       listStore.delete(2);
-      assert.deepEqual( listStore.toArray(), arr );
+      assert.deepEqual( listStore.toJS(), arr );
     });
   });
 
@@ -67,19 +67,19 @@ var likeImmutablelist = module.exports = function() {
     });
 
     it( 'returns a list with no values', function() {
-      assert.deepEqual( listStore.clear().toArray(), []);
+      assert.deepEqual( listStore.clear().toJS(), []);
     });
   });
 
   describe( '#push( ..values )', function() {
     it( 'returns a new list with provided values appended', function() {
       var listStore = ListStore();
-      assert.deepEqual( listStore.push(1,2,3).toArray(), [1,2,3]);
+      assert.deepEqual( listStore.push(1,2,3).toJS(), [1,2,3]);
     });
 
     it( 'appends the new values starting at the List\'s size', function() {
       var listStore = ListStore([1,2,3,4]);
-      assert.deepEqual( listStore.push(5,6).toArray(), [1,2,3,4,5,6]);
+      assert.deepEqual( listStore.push(5,6).toJS(), [1,2,3,4,5,6]);
     });
 
     it( 'the new list has the correct size', function() {
@@ -91,7 +91,7 @@ var likeImmutablelist = module.exports = function() {
     var listStore = ListStore([1,2,3]);
 
     it( 'returns a new list excluding the last index in this List', function() {
-      assert.deepEqual( listStore.pop().toArray(), [1,2]);
+      assert.deepEqual( listStore.pop().toJS(), [1,2]);
     });
 
     it( 'returns a new List with a size one less than this List', function() {
@@ -102,12 +102,12 @@ var likeImmutablelist = module.exports = function() {
   describe( '#unshift( ..values )', function() {
     it( 'returns a new list with provided values prepended', function() {
       var listStore = ListStore();
-      assert.deepEqual( listStore.unshift(1,2,3).toArray(), [1,2,3]);
+      assert.deepEqual( listStore.unshift(1,2,3).toJS(), [1,2,3]);
     });
 
     it( 'shifts other values values to higher indices', function() {
       var listStore = ListStore([3,4,5,6]);
-      assert.deepEqual( listStore.unshift(1,2).toArray(), [1,2,3,4,5,6]);
+      assert.deepEqual( listStore.unshift(1,2).toJS(), [1,2,3,4,5,6]);
     });
 
     it( 'the new list has the correct size', function() {
@@ -121,7 +121,7 @@ var likeImmutablelist = module.exports = function() {
     });
 
     it( 'shifts all other values to a lower index', function() {
-      assert.deepEqual( ListStore([1,2,3]).shift().toArray(), [2,3]);
+      assert.deepEqual( ListStore([1,2,3]).shift().toJS(), [2,3]);
     });
   });
 
@@ -137,7 +137,7 @@ var likeImmutablelist = module.exports = function() {
       ' into this List', function() {
       var listStore = ListStore([1,2,3,4,5]);
 
-      assert.deepEqual( listStore.merge([3,7,8], [6]).toArray(), [6,7,8,4,5]);
+      assert.deepEqual( listStore.merge([3,7,8], [6]).toJS(), [6,7,8,4,5]);
     });
   });
 
@@ -149,7 +149,7 @@ var likeImmutablelist = module.exports = function() {
     describe( 'when `size` is less than this List\'s size', function() {
       it( 'returns a new List excluding values at higher indices', function() {
         var list = ListStore([1,2,3,4,5]).setSize(3);
-        assert.deepEqual( list.toArray(), [1,2,3]);
+        assert.deepEqual( list.toJS(), [1,2,3]);
       });
     });
 
@@ -157,7 +157,7 @@ var likeImmutablelist = module.exports = function() {
       it( 'returns a new List that has undefined values for the newly'+
         ' available indices', function() {
         var list = ListStore([1,2]).setSize(4);
-        assert.deepEqual( list.toArray(), [1,2,undefined,undefined]);
+        assert.deepEqual( list.toJS(), [1,2,undefined,undefined]);
       });
     });
   });
@@ -166,7 +166,7 @@ var likeImmutablelist = module.exports = function() {
     it( 'returns a new List having set `value` at this `keyPath`', function() {
       var list = ListStore([1,2,3,4]);
 
-      assert.deepEqual( list.setIn([0], 3).toArray(), [3,2,3,4] );
+      assert.deepEqual( list.setIn([0], 3).toJS(), [3,2,3,4] );
     });
 
     describe( 'if any keys in `keyPath` do not exist', function() {
@@ -178,13 +178,13 @@ var likeImmutablelist = module.exports = function() {
     it( 'returns a new List having removed the value at `keyPath`', function() {
       var list = ListStore([1,2,3,4]);
 
-      assert.deepEqual( list.deleteIn([1]).toArray(), [1,3,4] );
+      assert.deepEqual( list.deleteIn([1]).toJS(), [1,3,4] );
     });
 
     it( 'returns an equal list if the keys in `keyPath` do not exist', function() {
       var list = ListStore([1,2,3,4]);
 
-      assert.deepEqual( list.deleteIn([5]).toArray(), list.toArray() );
+      assert.deepEqual( list.deleteIn([5]).toJS(), list.toJS() );
     });
   });
 };

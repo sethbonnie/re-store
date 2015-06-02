@@ -60,7 +60,7 @@ var mutablePersistentListMethods = module.exports = function() {
     it( 'mutates into a new List with index removed', function() {
       var store = ListStore([1,2,3,4]);
       store.deleteP(2);
-      assert.deepEqual( store.toArray(), [1,2,4] );
+      assert.deepEqual( store.toJS(), [1,2,4] );
     });
 
     it( 'shifts higher indices down', function() {
@@ -119,13 +119,13 @@ var mutablePersistentListMethods = module.exports = function() {
     it( 'mutates into a new List with the provided values appended', function() {
       var store = ListStore();
       store.pushP(1,2,3,4);
-      assert.deepEqual( store.toArray(), [1,2,3,4] );
+      assert.deepEqual( store.toJS(), [1,2,3,4] );
     });
 
     it( 'appends the new values starting at the List\'s size', function() {
       var store = ListStore([1,2,3,4]);
       store.pushP(5,6,7);
-      assert.deepEqual( store.toArray(), [1,2,3,4,5,6,7] );
+      assert.deepEqual( store.toJS(), [1,2,3,4,5,6,7] );
     });
 
     it( 'has a size equal to previous state + size of added values', function() {
@@ -153,7 +153,7 @@ var mutablePersistentListMethods = module.exports = function() {
       ' previous state', function() {
       var store = ListStore([1,2,3,4]);
       store.popP()
-      assert.deepEqual( store.toArray(), [1,2,3] ); 
+      assert.deepEqual( store.toJS(), [1,2,3] ); 
     });
 
     it( 'has a size 1 less than the previous state', function() {
@@ -181,7 +181,7 @@ var mutablePersistentListMethods = module.exports = function() {
     it( 'mutates into a new List with provided values prepended', function() {
       var store = ListStore([5,6]);
       store.unshiftP(1,2,3,4);
-      assert.deepEqual( store.toArray(), [1,2,3,4,5,6] );
+      assert.deepEqual( store.toJS(), [1,2,3,4,5,6] );
     });
 
     it( 'shifts other values to higher indices', function() {
@@ -213,7 +213,7 @@ var mutablePersistentListMethods = module.exports = function() {
       ' previous state', function() {
       var store = ListStore([1,2,3,4]);
       store.shiftP();
-      assert.deepEqual( store.toArray(), [2,3,4] );
+      assert.deepEqual( store.toJS(), [2,3,4] );
     });
 
     it( 'has a size 1 less than the previous state', function() {
