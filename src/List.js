@@ -62,9 +62,27 @@ var ListStore = module.exports = function( iterable ) {
       return this;
     },
 
-    unshiftP: function() {
+    unshiftP: function( _values ) {
       var newState = this.unshift.apply( this.__state, arguments );
+
       replaceState( this, newState );
+
+      return this;
+    },
+
+    shiftP: function() {
+      var newState = this.shift();
+
+      replaceState( this, newState );
+
+      return this;
+    },
+
+    setSizeP: function( size ) {
+      var newState = this.setSize( size );
+      
+      replaceState( this, newState );
+
       return this;
     }
   };

@@ -189,11 +189,42 @@ var mutablePersistentListMethods = module.exports = function() {
     });
 
     it( 'has a size equal to previous state + size of added values', function() {
-      var store = ListStore([1,2]);
+      var store = ListStore([3,4]);
       var originalSize = store.size();
-      store.unshiftP(3,4);
-      console.log( store.get(0) );
+      store.unshiftP(1,2);
       assert.equal( store.size(), originalSize + 2 );
+    });
+
+    it( 'emits a store.CHANGED event', function( done ) {
+      var store = ListStore([3,4]);
+      store.on( store.CHANGED, function() {
+        done();
+      });
+
+      store.unshiftP(1,2);
+    });
+  });
+
+  describe( 'shiftP()', function() {
+
+    it( 'mutates into a new List excluding the first index in the' +
+      ' previous state', function() {
+      var store = ListStore([1,2,3,4]);
+      store.shiftP();
+      assert.deepEqual( store.toArray(), [2,3,4] );
+    });
+
+    it( 'has a size 1 less than the previous state', function() {
+      var store = ListStore([1,2,3,4]);
+      var originalSize = store.size();
+      store.shiftP();
+      assert.equal( store.size(), originalSize - 1 );
+    });
+
+    it( 'shifts all other values to a lower index', function() {
+      var store = ListStore([1,2,3,4]);
+      store.shiftP();
+      assert.equal( store.get(0), 2 );
     });
 
     it( 'emits a store.CHANGED event', function( done ) {
@@ -201,36 +232,46 @@ var mutablePersistentListMethods = module.exports = function() {
       store.on( store.CHANGED, function() {
         done();
       });
-
-      store.unshiftP([3,4]);
+      store.shiftP();
     });
-  });
-
-  describe( 'shiftP()', function() {
-
-    it( 'mutates into a new List excluding the first index in the' +
-      ' previous state' );
-
-    it( 'has a size 1 less than the previous state' );
-
-    it( 'shifts all other values to a lower index' );
-
-    it( 'emits a store.CHANGED event' );
   });
 
   describe( 'setSizeP( size )', function() {
     describe( 'when size is less than previous state\'s size', function() {
-      it( 'mutates into a new list excluding values at higher indices' );
+      it( 'mutates into a new list excluding values at higher indices', function() {
+        var store = ListStore([1,2,3,4]);
+        store.setSizeP(3);
+        assert.equal( store.size(), 3 );
+        assert.strictEqual( store.get(3, null), null );
+      });
     });
 
     describe( 'when size is greater than previous state\'s size', function() {
       it( 'mutates into a new List that has undefined values for' +
-        ' the newly available indices' );
+        ' the newly available indices', function() {
+        var store = ListStore([1,2,3]);
+        store.setSizeP( 4 );
+        assert.equal( store.size(), 4 );
+        assert.strictEqual( store.get(3, true), undefined );
+      });
     });
 
-    it( 'mutates into a new List with the given size' );
+    it( 'mutates into a new List with the given size', function() {
+      var store = ListStore();
+      store.setSizeP( 4 );
+      assert.equal( store.size(), 4 );
+    });
 
-    it( 'emits a store.CHANGED event' );
+    it( 'emits a store.CHANGED event', function( done ) {
+      var store = ListStore();
+      store.on( store.CHANGED, function() {
+        done();
+      });
+      store.setSizeP(4);
+    });
+
+    it( 'does not emit a store.CHNAGED event when the given size is equal' +
+        ' to the current size or undefined' );
   });
 
   describe( 'setInP( keyPath, value', function() {
