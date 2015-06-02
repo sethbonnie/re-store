@@ -1,6 +1,7 @@
 var assert = require( 'assert' );
 var ListStore = require( '../src/List' );
 var Map = require( 'immutable' ).Map;
+var List = require( 'immutable' ).List;
 
 // Silence Immutable's warnings about Arrays
 console.warn = undefined;
@@ -303,10 +304,35 @@ var mutablePersistentListMethods = module.exports = function() {
 
   describe( 'deleteInP( keyPath )', function() {
 
-    it( 'mutates into a new List having removed the value at keyPath' );
+    var l1, l2;
 
-    it( 'returns an equal List if the keys in keyPath do not exist');
+    before(function() {
+      l1 = List([1,2]);
+      l2 = List([3,4]);
+    });
 
-    it( 'emits a store.CHANGED event' );
+    it( 'mutates into a new List having removed the value at keyPath', function() {
+      var store = ListStore([l1, l2]);
+      store.deleteInP( [0,0] );
+      assert.equal( store.getIn([0,0]), 1 );
+    });
+
+    it( 'returns an equal List if the keys in keyPath do not exist', function() {
+      var store = ListStore([l1, l2]);
+      var originalList = store.toJS();
+
+      store.deleteInP( [0,3] );
+      store.deleteInP( [2,0] );
+
+      assert.deepEqual( store.toJS(), originalList );
+    });
+
+    it( 'emits a store.CHANGED event', function() {
+      var store = ListStore([l1, l2]);
+      store.on( store.CHANGED, function() {
+        done();
+      });
+      store.deleteInP( [0,0] );
+    });
   });
 };

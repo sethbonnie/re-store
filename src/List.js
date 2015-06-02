@@ -90,7 +90,13 @@ var ListStore = module.exports = function( iterable ) {
       var newState = this.setIn( keyPath, value );
 
       replaceState( this, newState );
-      
+
+      return this;
+    },
+
+    deleteInP: function( keyPath ) {
+      var newState = this.deleteIn( keyPath );
+
       return this;
     }
   };
