@@ -4,7 +4,7 @@
   "description": "A data store built around immutable data structures.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -20,5 +20,16 @@
   "bugs": {
     "url": "https://github.com/sethbonnie/re-store/issues"
   },
-  "homepage": "https://github.com/sethbonnie/re-store"
+  "homepage": "https://github.com/sethbonnie/re-store",
+  "devDependencies": {
+    "gulp": "^3.8.11",
+    "gulp-jshint": "^1.10.0",
+    "immutable": "^3.7.2",
+    "mocha": "^2.2.4"
+  },
+  "dependencies": {
+    "forward-props": "^0.3.0",
+    "list-all-props": "0.0.1",
+    "object-assign": "^2.0.0"
+  }
 }
