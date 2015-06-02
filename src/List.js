@@ -84,6 +84,14 @@ var ListStore = module.exports = function( iterable ) {
       replaceState( this, newState );
 
       return this;
+    },
+
+    setInP: function( keyPath, value ) {
+      var newState = this.setIn( keyPath, value );
+
+      replaceState( this, newState );
+      
+      return this;
     }
   };
 
