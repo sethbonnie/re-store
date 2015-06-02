@@ -1,6 +1,6 @@
 {
   "name": "re-store",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "A data store built around immutable data structures.",
   "main": "index.js",
   "scripts": {
